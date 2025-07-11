@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Articles from '@/pages/articles/pages';
 import { Basic } from '@/pages/basic';
+import { UserList } from '@/pages/users';
 import Home from '@/pages/home/pages';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
@@ -21,6 +22,14 @@ const Router = () => (
         element={
           <PrivateRoute>
             <Basic />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/users" // async action
+        element={
+          <PrivateRoute>
+            <UserList />
           </PrivateRoute>
         }
       />
