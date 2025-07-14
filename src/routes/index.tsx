@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from '@/components/Main';
-import { Basic } from '@/pages/basic';
+import { Basic } from '@/pages/counter';
 import { UserList } from '@/pages/users';
 import { TodoList } from '@/pages/toDoList';
 import { ShopingCart } from '@/pages/shopingCart';
