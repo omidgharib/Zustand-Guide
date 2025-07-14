@@ -1,6 +1,7 @@
 {
   "name": "Zustand Guide",
   "version": "1.0.0",
+  "author": "Omid Gharib",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

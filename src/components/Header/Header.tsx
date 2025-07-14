@@ -14,14 +14,14 @@ const Header = () => {
             <div>
               <button type="button" className="flex items-center py-4 px-2">
                 <span className="font-semibold text-gray-500 text-lg">
-                  Boilerplate
+                  Zustand Guide
                 </span>
               </button>
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-3 ">
             <a
-              href="https://github.com/akhil-neoito/react-query-zustand-ts-vite-boilerplate"
+              href="https://github.com/omidgharib/Zustand-Guide"
               className="py-2 px-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-400 transition duration-300"
             >
               <svg

@@ -10,7 +10,6 @@ const products = [
 
 export const ShopingCart: React.FC = () => {
   const addToCart = useCartStore((state) => state.addToCart);
-
   return (
     <div style={{ padding: 20 }}>
       <h1>React Zustand Cart with Computed State</h1>
