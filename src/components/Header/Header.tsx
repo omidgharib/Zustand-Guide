@@ -13,9 +13,7 @@ const Header = () => {
           <div className="flex space-x-7">
             <div>
               <button type="button" className="flex items-center py-4 px-2">
-                <span className="font-semibold text-gray-500 text-lg">
-                  Zustand Guide
-                </span>
+                <span className="font-semibold text-gray-500 text-lg"></span>
               </button>
             </div>
           </div>

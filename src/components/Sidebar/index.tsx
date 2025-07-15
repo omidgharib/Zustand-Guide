@@ -47,9 +47,7 @@ const Sidebar: React.FC = () => {
 
       <div className="absolute bottom-6 left-6 right-6">
         <div className="bg-gray-700 rounded-lg p-4">
-          <p className="text-xs text-gray-400 text-center">
-            Zustand State Management
-          </p>
+          <p className="text-xs text-gray-400 text-center">Powered with ❤️</p>
         </div>
       </div>
     </aside>
