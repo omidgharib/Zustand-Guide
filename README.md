@@ -1,29 +1,33 @@
-zustand-guide/
-│
-├── 01-basic-store/ ← آموزش state ساده و action
-│ ├── README.md ← توضیحات این مثال
-│ └── App.tsx
-│
-├── 02-async-actions/ ← آموزش fetch دیتا با Zustand
-│ ├── README.md
-│ └── App.tsx
-│
-├── 03-persist-store/ ← ذخیره state در localStorage
-│
-├── 04-computed-state/ ← مشتق‌سازی state
-│
-├── 05-middleware-devtools/ ← devtools و logger
-│
-├── 06-slice-pattern/ ← ماژولار کردن store با slices
-│
-├── 07-combine-slices/ ← combine چند store
-│
-├── 08-auth-example/ ← پیاده‌سازی auth (login, logout)
-│
-├── 09-theme-toggle/ ← حالت شب/روز
-│
-├── 10-global-modal/ ← کنترل مودال‌ها با Zustand
-│
-├── README.md ← معرفی کلی پروژه، لینک به هر پوشه
-├── package.json
-└── vite.config.ts ← برای تست سریع هر مثال
+# Zustand Guide 🐻
+
+A practical, beginner-friendly guide to managing state in React applications using [Zustand](https://github.com/pmndrs/zustand). This repository contains hands-on examples that demonstrate how to use Zustand effectively in modern React projects.
+
+## 🌟 Features
+
+- 🔰 Simple &amp; beginner-friendly setup
+- 🎯 Covers key Zustand concepts: store creation, actions, selectors, middleware
+- 🔄 Async actions (e.g., fetching data from APIs)
+- 🧩 Modular &amp; scalable store architecture
+- ⚛️ Built with React and Vite for fast development
+
+## 📁 Project Structure
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/omidgharib/Zustand-Guide.git
+cd Zustand-Guide
+
+npm install
+# or
+yarn
+```
+---
+
+### Optional additions:
+- **GIF demo**: Use [Licecap](https://www.cockos.com/licecap/) or another tool to record the app in action.
+- **Live Demo**: If you deploy it on [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/), include the link in the README.
+
+Made with ❤️ by @omidgharib
