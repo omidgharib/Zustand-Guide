@@ -10,9 +10,9 @@ export const PWAConfig: Partial<VitePWAOptions> = {
     'apple-touch-icon.png',
   ],
   manifest: {
-    name: 'React Query Zustand Boilerplate',
-    short_name: 'boilerplate',
-    description: 'Boilerplate with React, Zustand, and Vite',
+    name: 'Zustand Guide',
+    short_name: 'Zustand',
+    description: 'React, Zustand, and Vite',
     theme_color: '#ffffff',
     start_url: '/',
     scope: '/',
