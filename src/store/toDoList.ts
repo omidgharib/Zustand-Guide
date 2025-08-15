@@ -12,6 +12,7 @@ interface TodoState {
   addTodo: (text: string) => void;
   toggleTodo: (id: string) => void;
   removeTodo: (id: string) => void;
+  reorderTodos: (fromIndex: number, toIndex: number) => void;
 }
 
 export const useTodoStore = create<TodoState>()(
@@ -42,6 +43,14 @@ export const useTodoStore = create<TodoState>()(
         set((state) => ({
           todos: state.todos.filter((todo) => todo.id !== id),
         })),
+
+      reorderTodos: (fromIndex, toIndex) =>
+        set((state) => {
+          const newTodos = [...state.todos];
+          const [movedTodo] = newTodos.splice(fromIndex, 1);
+          newTodos.splice(toIndex, 0, movedTodo);
+          return { todos: newTodos };
+        }),
     }),
     {
       name: 'todo-storage',

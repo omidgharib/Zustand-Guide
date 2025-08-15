@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTodoStore } from '@/store/toDoList';
+import styles from './TodoList.module.css';
 
 export const TodoList: React.FC = () => {
   const [text, setText] = useState('');
-  const { todos, addTodo, toggleTodo, removeTodo } = useTodoStore();
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const [removingId, setRemovingId] = useState<string | null>(null);
+  const { todos, addTodo, toggleTodo, removeTodo, reorderTodos } =
+    useTodoStore();
+  const dragRef = useRef<HTMLLIElement>(null);
 
   const handleAdd = () => {
     if (text.trim()) {
+      setIsAdding(true);
       addTodo(text);
       setText('');
+      // Reset animation state after animation completes
+      setTimeout(() => setIsAdding(false), 300);
     }
   };
 
@@ -16,6 +26,69 @@ export const TodoList: React.FC = () => {
     if (e.key === 'Enter') {
       handleAdd();
     }
+  };
+
+  const handleDragStart = (e: React.DragEvent, id: string) => {
+    setDraggedId(id);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', id);
+
+    // Add dragging class to the dragged element
+    if (dragRef.current) {
+      dragRef.current.style.opacity = '0.5';
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent, id: string) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDragOverId(id);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOverId(null);
+  };
+
+  const handleDrop = (e: React.DragEvent, targetId: string) => {
+    e.preventDefault();
+    const draggedId = e.dataTransfer.getData('text/html');
+
+    if (draggedId && draggedId !== targetId) {
+      const fromIndex = todos.findIndex((todo) => todo.id === draggedId);
+      const toIndex = todos.findIndex((todo) => todo.id === targetId);
+
+      if (fromIndex !== -1 && toIndex !== -1) {
+        reorderTodos(fromIndex, toIndex);
+      }
+    }
+
+    setDraggedId(null);
+    setDragOverId(null);
+
+    // Reset dragging styles
+    if (dragRef.current) {
+      dragRef.current.style.opacity = '1';
+    }
+  };
+
+  const handleDragEnd = () => {
+    setDraggedId(null);
+    setDragOverId(null);
+
+    // Reset dragging styles
+    if (dragRef.current) {
+      dragRef.current.style.opacity = '1';
+    }
+  };
+
+  const handleRemove = (id: string) => {
+    setRemovingId(id);
+    // Delay the actual removal to allow for animation
+    setTimeout(() => {
+      removeTodo(id);
+      setRemovingId(null);
+    }, 300);
   };
 
   return (
@@ -42,22 +115,46 @@ export const TodoList: React.FC = () => {
       </div>
 
       <ul className="space-y-2">
-        {todos.map((todo) => (
+        {todos.map((todo, index) => (
           <li
             key={todo.id}
-            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+            draggable
+            onDragStart={(e) => handleDragStart(e, todo.id)}
+            onDragOver={(e) => handleDragOver(e, todo.id)}
+            onDragLeave={handleDragLeave}
+            onDrop={(e) => handleDrop(e, todo.id)}
+            onDragEnd={handleDragEnd}
+            ref={draggedId === todo.id ? dragRef : null}
+            className={`
+              ${styles.todoItem}
+              ${draggedId === todo.id ? styles.dragging : ''}
+              ${dragOverId === todo.id && draggedId !== todo.id ? styles.dragOver : ''}
+              ${removingId === todo.id ? styles.removing : ''}
+              ${isAdding && index === todos.length - 1 ? styles.adding : ''}
+            `}
           >
-            <span
-              className={`flex-1 cursor-pointer ${
-                todo.completed ? 'line-through text-gray-500' : 'text-gray-800'
-              }`}
-              onClick={() => toggleTodo(todo.id)}
-            >
-              {todo.text}
-            </span>
+            <div className="flex items-center flex-1">
+              <div className={styles.dragHandle}>
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                </svg>
+              </div>
+              <span
+                className={`${styles.todoText} ${
+                  todo.completed ? styles.completed : ''
+                }`}
+                onClick={() => toggleTodo(todo.id)}
+              >
+                {todo.text}
+              </span>
+            </div>
             <button
-              onClick={() => removeTodo(todo.id)}
-              className="ml-3 p-1 text-red-500 hover:text-red-700 hover:bg-red-100 rounded transition-colors"
+              onClick={() => handleRemove(todo.id)}
+              className={styles.deleteButton}
               aria-label="Delete todo"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
