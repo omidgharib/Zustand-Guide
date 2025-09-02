@@ -10,7 +10,7 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   // Root directory of your source code (default is process.cwd())
-  root: '.', 
+  root: '.',
 
   // Base public path when served in production
   // Accepts: '/', './', 'https://cdn.example.com/assets/'
@@ -30,16 +30,16 @@ export default defineConfig({
   },
   plugins: [
     viteCompression({
-      verbose: true,         // Log compressed files
-      disable: false,        // Set to true to disable compression
-      threshold: 0,       // Only assets > 1KB are compressed
-      algorithm: 'gzip',     // gzip | brotliCompress | deflate | deflateRaw
-      ext: '.gz',            // File extension for compressed files
+      verbose: true, // Log compressed files
+      disable: false, // Set to true to disable compression
+      threshold: 0, // Only assets > 1KB are compressed
+      algorithm: 'gzip', // gzip | brotliCompress | deflate | deflateRaw
+      ext: '.gz', // File extension for compressed files
     }),
     react(),
     tsconfigPaths(),
     tailwindcss(),
-    VitePWA(PWAConfig)
+    VitePWA(PWAConfig),
   ],
   // Environment variable prefix
   // Only variables starting with VITE_ are exposed to your code
@@ -47,26 +47,31 @@ export default defineConfig({
 
   // Server config for dev mode
   server: {
-    host: 'localhost',     // '0.0.0.0' to expose to local network
-    port: 5173,            // Default port
-    open: true,            // Opens browser on start
-    https: false,          // Enable HTTPS
+    host: 'localhost', // '0.0.0.0' to expose to local network
+    port: 5173, // Default port
+    open: true, // Opens browser on start
+    https: false, // Enable HTTPS
     proxy: {
       // Proxy API calls to backend
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
   // Build configuration for production
   build: {
-    outDir: 'dist',                // Output directory
-    sourcemap: false,              // Generate source maps
-    minify: 'esbuild',             // 'esbuild' (fast) | 'terser' (slower, more compressive)
-    cssCodeSplit: true,            // Separate CSS into individual files
+    outDir: 'dist', // Output directory
+    sourcemap: false, // Generate source maps
+    minify: 'esbuild', // 'esbuild' (fast) | 'terser' (slower, more compressive)
+    cssCodeSplit: true, // Separate CSS into individual files
     rollupOptions: {
+      treeshake: {
+        moduleSideEffects: false,
+        propertyReadSideEffects: false,
+        tryCatchDeoptimization: false,
+      },
       output: {
         manualChunks(id) {
           // Separate vendor chunking

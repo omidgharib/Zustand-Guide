@@ -3,6 +3,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Router from './routes';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
+import PWAStatus from './components/PWAStatus';
+import PWAInstallGuide from './components/PWAInstallGuide';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
@@ -19,6 +22,9 @@ function App() {
       {/* </main>
         </div>
       </div> */}
+      <PWAStatus />
+      <PWAInstallPrompt />
+      <PWAInstallGuide />
       <ToastContainer />
     </QueryClientProvider>
   );
